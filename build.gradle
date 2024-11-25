@@ -21,6 +21,9 @@ repositories {
 //maven Central을 통해 아래 dependencies를 다운로드 받는 형태, 다른 링크로 변경할 수도 있음
 
 //초기에 설정한 dependencies 및 추가를 하면 됨.
+// org.springframework.boot:spring-boot-starter-test 는 자동으로 설정
+// 알아서 의존 관계로 필요한 것은 SpringBoot에서 가져옴(의존관계를 관리해줌)
+// ex) Spring-boot-start-web을 implementation을 하는 경우, 자동으로 tomcat, mvc 등을 가지고 옴
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -32,4 +35,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-//test는 자동으로 생김
