@@ -12,7 +12,17 @@ import java.util.Optional;
 /*테스트를 하고 싶을 때 command + shift + T를 할때 테스트가 만들어짐*/
 public class MemberService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
+
+    private final MemberRepository memberRepository;
+
+//    외부에서 memberRespository를 넣어주도록 변경
+//    테스트 시 별도 생성이 아닌 같은 객체로 테스트
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+
 
     /*
     * 회원 가입

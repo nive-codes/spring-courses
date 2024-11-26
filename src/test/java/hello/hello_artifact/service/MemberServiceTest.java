@@ -4,6 +4,8 @@ import hello.hello_artifact.domain.MemberVO;
 import hello.hello_artifact.respository.MemoryMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
@@ -16,11 +18,19 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /*컨트롤 R은 이전 실행 기록을 다시 실행함*/
 class MemberServiceTest {
 
-    MemberService memberService = new MemberService();
+    MemberService memberService;
 
-    MemoryMemberRepository memoryMemberRepository = new MemoryMemberRepository();
+    MemoryMemberRepository memoryMemberRepository;
+    /*memberService에 있는 MemoryMemberRespository가 다른 객체이므로 조금 애매함. static이라서 괜찮지만 만약 다르다면?*/
+    /*memberService에 있는 memberRepository를 받아서 처리하도록 수정*/
 
+    @BeforeEach
+    void BeforeEach(){
+        memoryMemberRepository = new MemoryMemberRepository();      /*만든 후 */
 
+        memberService = new MemberService(memoryMemberRepository);  /*service에 만들어진 respository를 넘겨줌*/
+        /*memberService입장에서 new MemberResository를 만들어주는게 아닌 넣어주니까, Dependency Injection(DI) */
+    }
 
     @AfterEach
     void afterEach() {
