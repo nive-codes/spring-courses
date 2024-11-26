@@ -27,6 +27,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'	/*db 연결하기 위한 jdbc*/
+	runtimeOnly 'com.h2database:h2'	/*db에서 제공하는 클라이언트(h2의 클라이언트)*/
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

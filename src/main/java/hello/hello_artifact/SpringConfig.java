@@ -1,5 +1,6 @@
 package hello.hello_artifact;
 
+import hello.hello_artifact.respository.JdbcMemberRepository;
 import hello.hello_artifact.respository.MemberRepository;
 import hello.hello_artifact.respository.MemoryMemberRepository;
 import hello.hello_artifact.service.MemberService;
@@ -7,9 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+
 /*애노테이션 없이 직접 스자바코드로 스프링 빈 설정하는 방법*/
 @Configuration
 public class SpringConfig {
+
+    /*Datasource를 bean으로 등록 후 주입*/
+    private DataSource dataSource;
+    @Autowired
+    public SpringConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
 
     /*spring bean을 직접 등록하겠다*/
     @Bean
@@ -17,16 +28,17 @@ public class SpringConfig {
         return new MemberService(memberRepository());
     }
 
-    @Bean
-    public MemberRepository memberRepository() {    /*interface니까 구현체는 MemoryMemberRepository*/
-        return new MemoryMemberRepository();
-    }
+//    @Bean
+//    public MemberRepository memberRepository() {    /*interface니까 구현체는 MemoryMemberRepository*/
+//        return new MemoryMemberRepository();
+//    }
 
     /*이걸 나중에 DB에 저정하는 방식으로 하고 싶을 때 아래와 같이 구현체 부분만 바꿔서 Bean으로 등록하면 쉽게 변경이 가능하다.*/
-    /*@Bean
+    /**/
+    @Bean
     public MemberRepository memberRepository() {
-        return new DBMemberRepository();
-    }*/
+        return new JdbcMemberRepository(dataSource);
+    }
 
     /*컴포넌트 스캔과 직접 작성의 차이*/
     /*Spring에서는 xml에서 사용*/
