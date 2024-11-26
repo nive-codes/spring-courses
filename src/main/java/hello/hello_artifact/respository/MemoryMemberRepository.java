@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /*리포지토리를 상속받은 구현체*/
 /*도메인 객체를 저장하고 관리*/
+//@Repository       /*bean 따로 등록 하지 않는 경우 repository 선언*/
 public class MemoryMemberRepository implements MemberRepository {
 
 //    private static ConcurrentMap <Long,MemberVO> store = new ConcurrentHashMap<>();   //동시성 해결
