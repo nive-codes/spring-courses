@@ -1,8 +1,16 @@
 package hello.hello_artifact.controller;
 
+import hello.hello_artifact.domain.MemberVO;
 import hello.hello_artifact.service.MemberService;
+import hello.hello_artifact.vo.MemberForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.lang.reflect.Member;
+import java.util.List;
 
 /*스프링이 실행 될 때 controller를 가져와서 -> service -> repository */
 /*컨트롤러가 생성될 때 스프링 빈에 등록되어 있는 개체를 넣어줌 -> DI(의존관계 주입을 해줌) - 싱글톤(딱 한개만 생성해서 공유함-메모리 절약하고 좋음)*/
@@ -27,10 +35,37 @@ public class MemberController {
 
 private final MemberService memberService;
 
-    
+
     @Autowired
     public MemberController(MemberService memberService) {
     this.memberService = memberService;
+    }
+
+
+    /*GetMapping 및 PostMapping이냐에 따라서 매핑을 같이 쓸 수도 있음.*/
+    /*RequestMapping인 경우 에러가 보통 나왔었는데, 이 경우 모든 http메소드에 해당해서 적용이라서.*/
+
+    @GetMapping(value = "/members/new")
+    public String createForm() {
+        return "members/createMemberForm";
+    }
+
+    @PostMapping(value = "/members/new")
+    public String create(MemberForm form) {
+        MemberVO member = new MemberVO();
+
+        member.setName(form.getName());
+
+        memberService.join(member);
+        return "redirect:/";
+    }
+
+
+    @GetMapping(value = "/members")
+    public String list(Model model) {
+        List<MemberVO> members = memberService.findMembers();
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 
 }
