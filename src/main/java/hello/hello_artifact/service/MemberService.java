@@ -9,6 +9,7 @@ import java.util.Optional;
 
 /*서비스*/
 /*비지니스에 의존적으로 설계를 주로 하고 용어도 마찬가지.*/
+/*테스트를 하고 싶을 때 command + shift + T를 할때 테스트가 만들어짐*/
 public class MemberService {
 
     private final MemberRepository memberRepository = new MemoryMemberRepository();
