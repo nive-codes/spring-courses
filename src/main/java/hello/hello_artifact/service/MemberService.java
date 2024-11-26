@@ -12,7 +12,6 @@ import java.util.Optional;
 /*서비스*/
 /*비지니스에 의존적으로 설계를 주로 하고 용어도 마찬가지.*/
 /*테스트를 하고 싶을 때 command + shift + T를 할때 테스트가 만들어짐*/
-@Service
 public class MemberService {
 
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
@@ -22,7 +21,6 @@ public class MemberService {
 //    외부에서 memberRespository를 넣어주도록 변경
 //    테스트 시 별도 생성이 아닌 같은 객체로 테스트
 
-    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
