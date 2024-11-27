@@ -9,29 +9,40 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
+import javax.swing.*;
 
 /*애노테이션 없이 직접 스자바코드로 스프링 빈 설정하는 방법*/
 @Configuration
 public class SpringConfig {
 
     /*Datasource를 bean으로 등록 후 주입*/
-    private DataSource dataSource;
+//    private DataSource dataSource;
 
     /*JPA는 EM 필수*/
 //    @PersistenceContext 이 애노테이션으로 받을 수도 있고 생성자로 받을 수도 있고
-    private EntityManager em;
+//    private EntityManager em;
 
-    @Autowired
-    public SpringConfig(DataSource dataSource, EntityManager em) {
-        this.dataSource = dataSource;
-        this.em = em;
+//    @Autowired
+//    public SpringConfig(DataSource dataSource, EntityManager em) {
+//        this.dataSource = dataSource;
+//        this.em = em;
+//    }
+
+    /*Spring Data JPA*/
+    private final MemberRepository memberRepository;
+
+    @Autowired/*Autowired 생략가능 한개일대는*/
+    public SpringConfig(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
+
+
 
 
     /*spring bean을 직접 등록하겠다*/
     @Bean
     public MemberService memberService() {
-        return new MemberService(memberRepository());
+        return new MemberService(memberRepository);
     }
 
 //    @Bean
@@ -51,11 +62,11 @@ public class SpringConfig {
 //    public MemberRepository memberRepository() {
 //        return new JdbcTemplateMemberRepository(dataSource);
 //    }
-
-    @Bean
-    public MemberRepository memberRepository() {
-        return new JpaMemberRepository(em);
-    }
+    /*jpa 조립*/
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        return new JpaMemberRepository(em);
+//    }
 
     /*컴포넌트 스캔과 직접 작성의 차이*/
     /*Spring에서는 xml에서 사용*/
