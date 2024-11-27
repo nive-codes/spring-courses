@@ -1,6 +1,7 @@
 package hello.hello_artifact;
 
 import hello.hello_artifact.respository.JdbcMemberRepository;
+import hello.hello_artifact.respository.JdbcTemplateMemberRepository;
 import hello.hello_artifact.respository.MemberRepository;
 import hello.hello_artifact.respository.MemoryMemberRepository;
 import hello.hello_artifact.service.MemberService;
@@ -35,9 +36,15 @@ public class SpringConfig {
 
     /*이걸 나중에 DB에 저정하는 방식으로 하고 싶을 때 아래와 같이 구현체 부분만 바꿔서 Bean으로 등록하면 쉽게 변경이 가능하다.*/
     /**/
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        return new JdbcMemberRepository(dataSource);
+//    }
+
+    /*JdbcTemplate 조립*/
     @Bean
     public MemberRepository memberRepository() {
-        return new JdbcMemberRepository(dataSource);
+        return new JdbcTemplateMemberRepository(dataSource);
     }
 
     /*컴포넌트 스캔과 직접 작성의 차이*/
