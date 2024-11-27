@@ -1,10 +1,9 @@
 package hello.hello_artifact;
 
-import hello.hello_artifact.respository.JdbcMemberRepository;
-import hello.hello_artifact.respository.JdbcTemplateMemberRepository;
-import hello.hello_artifact.respository.MemberRepository;
-import hello.hello_artifact.respository.MemoryMemberRepository;
+import hello.hello_artifact.respository.*;
 import hello.hello_artifact.service.MemberService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +16,15 @@ public class SpringConfig {
 
     /*Datasource를 bean으로 등록 후 주입*/
     private DataSource dataSource;
+
+    /*JPA는 EM 필수*/
+//    @PersistenceContext 이 애노테이션으로 받을 수도 있고 생성자로 받을 수도 있고
+    private EntityManager em;
+
     @Autowired
-    public SpringConfig(DataSource dataSource) {
+    public SpringConfig(DataSource dataSource, EntityManager em) {
         this.dataSource = dataSource;
+        this.em = em;
     }
 
 
@@ -42,9 +47,14 @@ public class SpringConfig {
 //    }
 
     /*JdbcTemplate 조립*/
+//    @Bean
+//    public MemberRepository memberRepository() {
+//        return new JdbcTemplateMemberRepository(dataSource);
+//    }
+
     @Bean
     public MemberRepository memberRepository() {
-        return new JdbcTemplateMemberRepository(dataSource);
+        return new JpaMemberRepository(em);
     }
 
     /*컴포넌트 스캔과 직접 작성의 차이*/

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,11 +28,12 @@ class MemberServiceIntigrationTest {
 
 
     @Test
+//    @Commit
     void join() {
 
         //given
         MemberVO memberVO = new MemberVO();
-        memberVO.setName("userName");
+        memberVO.setName("userName222");
 
         //when
         Long uniqId = memberService.join(memberVO);

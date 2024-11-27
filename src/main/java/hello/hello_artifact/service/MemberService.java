@@ -5,6 +5,7 @@ import hello.hello_artifact.respository.MemberRepository;
 import hello.hello_artifact.respository.MemoryMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 /*비지니스에 의존적으로 설계를 주로 하고 용어도 마찬가지.*/
 /*테스트를 하고 싶을 때 command + shift + T를 할때 테스트가 만들어짐*/
 //@Service  //springConfig.java에서 선언 되어 있음.
+@Transactional  /*jap사용시에는 트랜잭션을 염두해둬야함.*/
 public class MemberService {
 
 //    private final MemberRepository memberRepository = new MemoryMemberRepository();
