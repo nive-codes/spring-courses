@@ -3,14 +3,14 @@ package hello.core.common;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 //생존범위는 고객 접속 후 나갈때 까지인데, spring 컨테이너가 뜨는 시점에는 요청이 없으므로 오류가 발생
 @Component
-@Scope(value = "request")
-
+@Scope(value = "request",proxyMode = ScopedProxyMode.TARGET_CLASS)  //가짜를 만드는 프록시
 public class MyLogger {
 
     private String uuid;
