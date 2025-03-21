@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-devtools'	//thymeleaf 리로딩, 캐시 초기화 등 지원
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'	// spring boot 3.0이상 라이브러리 1.9이상 사용, 단 외부 라이브러리는 시스템 자원 사용하므로 운영시스템 적용 전에는 성능테스트 꼭 하고 사용할 것.
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
