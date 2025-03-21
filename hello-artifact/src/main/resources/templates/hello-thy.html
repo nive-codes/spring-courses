@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">  <!--thymeleaf 문법 사용 가능-->
+<head>
+    <title>static content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'안녕하세요'+${name}">서버 없이 경로로 열었을 때 해당 데이터 소스를 확인 가능 // 엔진으로 사용될 떄(서버가 기동 되었을 때는 th~ 값 활용)</p>
+</body>
+</html>
