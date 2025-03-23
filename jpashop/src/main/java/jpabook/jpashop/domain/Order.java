@@ -39,7 +39,7 @@ public class Order {
     private Delivery delivery;
 
     //하이버네이트가 직접 지원해줌
-    private LocalDateTime orderDateTime; //주문시간
+    private LocalDateTime orderDate; //주문시간
 
     @Enumerated(EnumType.STRING)   //ORDINAL말고 꼭 STRING으로 해야되고, 순서 밀리는게 없음.
     private OrderStatus orderStatus; //주문상태 [ORDER, CANCEL]
