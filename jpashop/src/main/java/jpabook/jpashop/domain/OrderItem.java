@@ -2,6 +2,8 @@ package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
 import jpabook.jpashop.domain.item.Item;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author hosikchoi
@@ -10,6 +12,7 @@ import jpabook.jpashop.domain.item.Item;
  * @since 2025-03-23
  */
 @Entity
+@Getter @Setter
 public class OrderItem {
 
     @Id @GeneratedValue
