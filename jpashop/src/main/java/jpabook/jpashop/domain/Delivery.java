@@ -19,7 +19,7 @@ public class Delivery {
     private Long id;
 
     //거울(order 객체에 있는 delivery
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)//가급적이면 XToOne은 쓰지말고 꼭 지연로딩(LAZY)로 처리)
     private Order order;
 
     @Embedded

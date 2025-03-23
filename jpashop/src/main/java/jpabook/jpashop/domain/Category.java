@@ -44,7 +44,7 @@ public class Category {
 
 
     //나(부모)는 한개
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)  //가급적이면 XToOne은 쓰지말고 꼭 지연로딩(LAZY)로 처리)
     @JoinColumn(name = "parent_id")
     private Category parent;
 

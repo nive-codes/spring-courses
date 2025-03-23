@@ -24,7 +24,7 @@ public class Order {
     @Column(name="order_id")
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)  //가급적이면 XToOne은 쓰지말고 꼭 지연로딩(LAZY)로 처리)
     @JoinColumn(name="member_id")
     /*외래키는 orders 테이블에 있고, Order Entity가 또 Member를 가지고 있기 때문에 얘를 연관관계의 주인으로 규악해서 사용*/
     private Member member;
@@ -34,7 +34,7 @@ public class Order {
 
     // 1:1 관계에서는 order에 외래키를 주로 두는 편(오더에서 딜리버리를 찾기 때문)
     // 연관관계의 주인 역시 order있는 delivery를 주인으로 두기
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)  //가급적이면 XToOne은 쓰지말고 꼭 지연로딩(LAZY)로 처리)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
