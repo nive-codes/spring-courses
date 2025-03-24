@@ -26,6 +26,7 @@ public class Member {
     @Embedded //내장되어 있는 객체이다.
     private Address address;
 
+    // 1:N 관계다~
     @OneToMany(mappedBy = "member")  //order 테이블에 있는 member 필드에 의해서 매핑이 되는 것이다. 라고 매핑된 거울이라고 읽기 전용이 되는 것.
     private List<Order> orders = new ArrayList<>();
 }
