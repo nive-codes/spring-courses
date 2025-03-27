@@ -56,7 +56,9 @@ public abstract class Item {
         if(restStock<0){
             throw new NotEnoughStockException("need more stock");
         }
-        this.stockQuantity -= restStock;
+//        System.out.println("재고 확인 : "+stockQuantity);
+        this.stockQuantity = restStock;
+//        System.out.println("재고 확인 : "+stockQuantity);
 
 
     }
