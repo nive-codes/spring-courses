@@ -69,4 +69,11 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);
+        member.setName(name);
+        //변경 감지를 통해 트랜잭션 aop가 끝나는 시점 commit되면서 flush, 영속성 컨텍스트 전부  처리됨.
+
+    }
 }
