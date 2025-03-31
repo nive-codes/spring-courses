@@ -25,6 +25,11 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
+    @GetMapping("/api/v1/members")
+    public List<Member> membersV1(){
+        return memberService.findMembers();
+    }
+
     @PostMapping("/api/v1/members")
     public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member){    //json으로 온 데이터를 member에 매핑해줌
 //        근데 entity말고 dto를 받아서 처리하도록 -> api 스펙이 바뀜 -> api 스펙으로 dto를 생성해서 받고, entity 변경되도 api 스펙은 문제없도록 처리.(외부노출금지)
