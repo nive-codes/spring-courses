@@ -24,7 +24,8 @@ public class ItemRepository {
     if(item.getId() == null) {
       em.persist(item);
     } else{
-      em.merge(item);
+      em.merge(item); //merge해서 나온 Item Result = em.merge(item)은 result는 영속성 관리 되나 item은 관리안됨
+      //  내가 변경하고자 하는 값만 변경이 불가능하다(빈값은 null로 변경되는 등, 변경되선 안되는 값도 변경이 되어버린다.)
     }
   }
 
