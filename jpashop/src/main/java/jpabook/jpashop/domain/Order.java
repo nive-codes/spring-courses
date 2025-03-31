@@ -17,6 +17,7 @@ import java.util.List;
  * @since 2025-03-23
  */
 
+/*API의 경우, Entity를 꼭 리턴 시키면 안되고, api 스펙이 변경되므로 외부에는 절대 entity를 노출시키지 말자. 중요하다.*/
 @Entity
 @Table(name = "orders")
 @Getter @Setter
