@@ -73,6 +73,14 @@ public class OrderRepository {
     ).getResultList();
   }
 
+  /*기본적으로 embedable이나 entity만 return 이 가능하다.*/
+  public List<OrderSimpleQueryDto> findOrderDtos() {
+    return em.createQuery("select new jpabook.jpashop.respository.OrderSimpleQueryDto(o.id,m.name,o.orderDate,o.status,d.address)" +
+            " from Order o " +
+            " join o.member m" +
+            " join o.delivery d" , OrderSimpleQueryDto.class).getResultList();
+  }
+
 
   //jpql을 자바코드로 작성할때 표준으로 제공해주는 것이 있음
 

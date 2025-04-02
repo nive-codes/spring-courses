@@ -5,6 +5,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.respository.OrderRepository;
 import jpabook.jpashop.respository.OrderSearch;
+import jpabook.jpashop.respository.OrderSimpleQueryDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,6 +79,22 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
 
     }
+
+    /*100% jpa로 dto로 바로 조회*/
+    /*repository를 보면 내가 직접 원하는거만 짰으므로 직접 가져옴.*/
+    /*fetch는 같으나 필요없는 값도 select해오는 문제가 있음.*/
+    /*v3와 v4는 트레이드 오프가 있음*/
+    /*v3는 재사용성이 있음 order에 필요한 값만(member, address만 활용해서 가져옴). entity이므로 데이터를 바꾸면 마지막 flush가 일어날때 트랜잭션-db반영됨.*/
+    /*v4는 딱 OrderSimpleQueryDto만 사용할때만 활용. 로직을 재활용할 수 없음. 단 v4가 성능은 아주 조금 더 좋다. 단 dto이므로 비즈니스 로직을 사용할 수 없다.*/
+    /*api 스펙에 맞춰서 repository를 짠거라서, repository는 entity를 관리하는건데.. 고민해볼만하다. repository가 api 스펙에 의존하는 형태가 된다.*/
+    /*v4를 써야될때는 가급적 별도 패키지에 repository와 dto를 만들어서 controller에서 주입받아서 활용하자. repository는 가급적 entity를 핸들링 하는 용도로만.*/
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4() {
+        return orderRepository.findOrderDtos();
+
+    }
+
+
 
     @Data
     static class SimpleOrderDto{
