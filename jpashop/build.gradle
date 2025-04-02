@@ -25,7 +25,7 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5'	//지연로딩일때 필수로 추가할 것(안그러면 무한루프 돔 entity에 아니면 JsonIgnore를 다 걸어줘야함.
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate6'	//지연로딩일때 필수로 추가할 것(안그러면 무한루프 돔 entity에 아니면 JsonIgnore를 다 걸어줘야함.(6버전으로 할 것. springboot 3.x인경우)
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-devtools'	//thymeleaf 리로딩, 캐시 초기화 등 지원
