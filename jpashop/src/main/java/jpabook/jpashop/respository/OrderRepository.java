@@ -2,13 +2,11 @@ package jpabook.jpashop.respository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.persistence.criteria.*;
 import jpabook.jpashop.domain.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +62,15 @@ public class OrderRepository {
       query = query.setParameter("name", orderSearch.getMemberName());
     }
     return query.getResultList();
+  }
+
+  /*fetch는 jpql만 있음.*/
+  public List<Order> finAllWithMemberDelivery() {
+    return em.createQuery(
+            "select o from Order o " +
+                    "join fetch o.member m " +
+                    "join fetch o.delivery d", Order.class
+    ).getResultList();
   }
 
 
