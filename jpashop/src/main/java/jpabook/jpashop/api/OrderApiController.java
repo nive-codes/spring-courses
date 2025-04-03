@@ -6,6 +6,8 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.respository.OrderRepository;
 import jpabook.jpashop.respository.OrderSearch;
+import jpabook.jpashop.respository.order.query.OrderQueryDto;
+import jpabook.jpashop.respository.order.query.OrderQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
@@ -29,6 +31,8 @@ import java.util.stream.Collectors;
 public class OrderApiController {
 
     private final OrderRepository orderRepository;
+
+    private final OrderQueryRepository orderQueryRepository;
 
     @GetMapping("/api/v1/orders")
     public List<Order> orderV1() {
@@ -78,7 +82,7 @@ public class OrderApiController {
     /*v3가 페치조인이지만 중복된 데이터를 일단 애플리케이션으로 보내고 하이버네이트가 처리해주므로서, v3도 쿼리는 한번이지만 전송되는 데이터(용량)이 크다.
     * v3.1은 쿼리를 잘라서 v3보다 많이 보내지만 최적화되어(in절) 전송한다
     * application.yml 참조할 것.
-    * 
+    *
     * */
     @GetMapping("/api/v3.1/orders")
     public  List<OrderDto>  orderV3_page(
@@ -90,6 +94,13 @@ public class OrderApiController {
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
         return collect;
+    }
+
+    //repository에서 바로 dto 반환
+    @GetMapping("/api/v4/orders")
+    public  List<OrderQueryDto>  orderV4() {
+        return orderQueryRepository.finaOrderQueryDtos();
+//        return null;
     }
 
     @Data
