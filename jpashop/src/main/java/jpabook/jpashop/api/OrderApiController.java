@@ -6,6 +6,8 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.respository.OrderRepository;
 import jpabook.jpashop.respository.OrderSearch;
+import jpabook.jpashop.respository.order.query.OrderFlatDto;
+import jpabook.jpashop.respository.order.query.OrderItemQueryDto;
 import jpabook.jpashop.respository.order.query.OrderQueryDto;
 import jpabook.jpashop.respository.order.query.OrderQueryRepository;
 import lombok.Data;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.*;
 
 /**
  * @author hosikchoi
@@ -58,7 +62,7 @@ public class OrderApiController {
         List<Order> orders = orderRepository.findAll(new OrderSearch());
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
-                .collect(Collectors.toList());
+                .collect(toList());
         return collect;
     }
 
@@ -72,7 +76,7 @@ public class OrderApiController {
         List<Order> allWithItem = orderRepository.findAllWithItem();
         List<OrderDto> collect = allWithItem.stream()
                 .map(o -> new OrderDto(o))
-                .collect(Collectors.toList());
+                .collect(toList());
         return collect;
     }
 
@@ -92,7 +96,7 @@ public class OrderApiController {
         List<Order> orders = orderRepository.findAllWithMemberDelivery(offset,limit);
         List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
-                .collect(Collectors.toList());
+                .collect(toList());
         return collect;
     }
 
@@ -100,6 +104,35 @@ public class OrderApiController {
     @GetMapping("/api/v4/orders")
     public  List<OrderQueryDto>  orderV4() {
         return orderQueryRepository.finaOrderQueryDtos();
+//        return null;
+    }
+
+    //repository에서 바로 dto 반환(쿼리 단 두번)
+    @GetMapping("/api/v5/orders")
+    public  List<OrderQueryDto>  orderV5() {
+        return orderQueryRepository.findAllByDto_optimization();
+//        return null;
+    }
+
+    //repository에서 바로 dto 반환 -> 플랫데이터 최적화
+    @GetMapping("/api/v6/orders")
+    public  List<OrderFlatDto>  orderV6() {
+        List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();      //중복으로 나온걸 아래 코딩을 통해 처리
+        return flats;
+
+//        List<OrderFlatDto> flats = orderQueryRepository.findAllByDto_flat();
+//        return flats.stream()
+//                .collect(groupingBy(o -> new OrderQueryDto(o.getOrderId(),
+//                                o.getName(), o.getOrderDate(), o.getOrderStatus(), o.getAddress()),
+//                        mapping(o -> new OrderItemQueryDto(o.getOrderId(),
+//                                o.getItemName(), o.getOrderPrice(), o.getCount()), toList())
+//                )).entrySet().stream()
+//                .map(e -> new OrderQueryDto(e.getKey().getOrderId(),
+//                        e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getOrderStatus(),
+//                        e.getKey().getAddress(), e.getValue()))
+//                .collect(toList());
+
+
 //        return null;
     }
 
@@ -125,7 +158,7 @@ public class OrderApiController {
             // order.getOrderItems().stream().forEach(o -> o.getItem().getName());   -> 프록시 초기화 후 다시 세팅
             orderItems  = order.getOrderItems().stream()       ////똑같이 dto로 감싸서 필요한 데이터만 전달
                     .map(o -> new OrderItemDto(o))
-                    .collect(Collectors.toList());
+                    .collect(toList());
         }
     }
 
