@@ -33,6 +33,7 @@ public class Order {
     /*외래키는 orders 테이블에 있고, Order Entity가 또 Member를 가지고 있기 때문에 얘를 연관관계의 주인으로 규악해서 사용*/
     private Member member;
 
+    // @BatchSize(size = 1000) 이런식으로 배치사이즈를 직접 조절할 수도 있다.(컬렉션일땐)
     @OneToMany(mappedBy = "order", cascade=CascadeType.ALL) //order가 persist?될때 orderItems도 함께 persist됨. 각각 persist를 해줘야되는데 그럴 필요가 없는 것.
     private List<OrderItem> orderItems = new ArrayList<>(); //바로 초기화 (new)로 하면 NullPointerException에서 안전하고, 또 컬렉션으로 감싼다 하이버네이트가
 

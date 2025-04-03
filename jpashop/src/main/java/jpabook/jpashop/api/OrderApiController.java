@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.jaxb.SpringDataJaxb;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -66,6 +67,26 @@ public class OrderApiController {
     public  List<OrderDto>  orderV3() {
         List<Order> allWithItem = orderRepository.findAllWithItem();
         List<OrderDto> collect = allWithItem.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+        return collect;
+    }
+
+    /*페이징이 가능한 3.1v*/
+    /*toOne 관계의 애들은 한번의 fetch조인으로 데이터 가져오기*/
+    /*v3보다 쿼리가 다소 조금 더 나가지만, 1:다 에 해당되는걸 n+1문제를 해결할 수 있다. 단 v3는 한개의 컬렉션이 있다면 fetch조인이 가능하다. 하지만 페이징이 안됨..*/
+    /*v3가 페치조인이지만 중복된 데이터를 일단 애플리케이션으로 보내고 하이버네이트가 처리해주므로서, v3도 쿼리는 한번이지만 전송되는 데이터(용량)이 크다.
+    * v3.1은 쿼리를 잘라서 v3보다 많이 보내지만 최적화되어(in절) 전송한다
+    * application.yml 참조할 것.
+    * 
+    * */
+    @GetMapping("/api/v3.1/orders")
+    public  List<OrderDto>  orderV3_page(
+            @RequestParam(value = "offset", defaultValue = "0", required = false) int offset,
+            @RequestParam(value = "limit", defaultValue = "10", required = false) int limit
+                                              ) {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset,limit);
+        List<OrderDto> collect = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
         return collect;

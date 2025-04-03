@@ -95,6 +95,27 @@ public class OrderRepository {
             .getResultList();       //!!!!컬렉션 페치 조인(1:다)은 1개만 사용할 수 있고, 둘 이상에 페치조인을 해버리면 데이터가 부정합하게 조회될 수 있다.
   }
 
+  public List<Order> findAllWithMemberDelivery() {
+    return em.createQuery(
+            "select o from Order o " +
+                    " join fetch  o.member m" +
+                    " join fetch  o.delivery d",Order.class
+    )
+            .getResultList();
+  }
+
+  public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+    return em.createQuery(
+                    "select o from Order o " +
+                            " join fetch  o.member m" +
+                            " join fetch  o.delivery d",Order.class
+            )
+            .setFirstResult(offset)
+            .setMaxResults(limit)
+            .getResultList();
+  }
+
+
 
   //jpql을 자바코드로 작성할때 표준으로 제공해주는 것이 있음
 
