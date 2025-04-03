@@ -81,6 +81,20 @@ public class OrderRepository {
             " join o.delivery d" , OrderSimpleQueryDto.class).getResultList();
   }
 
+//  하이버네이트6에서는 자동으로 중복 제거를 보정한다.(중복제거 최적화) 루트의 엔티티를 중복을 걸러줌
+  public List<Order> findAllWithItem() {
+    return em.createQuery(
+            "select o from Order o " +
+                    " join fetch  o.member m" +
+                    " join fetch  o.delivery d" +
+                    " join fetch  o.orderItems oi" +      //order 2개고 item이 2개일때, order row가 4개가 나옴.
+                    " join fetch  oi.item i", Order.class
+    )
+//            .setFirstResult(1)    //1:다 조인의 경우 order의 기준 자체가 틀려져버리므로 페이징이 정상적으로 적용 않는다. group by,distinct 같은 쿼리 기준이 다름.
+//            .setMaxResults(10)    //!!!!모든 데이터를 가지고 온 뒤에 메모리에서 페이징을 하므로 매우 위험하다.
+            .getResultList();       //!!!!컬렉션 페치 조인(1:다)은 1개만 사용할 수 있고, 둘 이상에 페치조인을 해버리면 데이터가 부정합하게 조회될 수 있다.
+  }
+
 
   //jpql을 자바코드로 작성할때 표준으로 제공해주는 것이 있음
 

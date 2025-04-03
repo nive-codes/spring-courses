@@ -57,9 +57,18 @@ public class OrderApiController {
         return collect;
     }
 
+    /*fetch join v3*/
+    /*하이버네이트5에서는 4개가 나와야되지만(initService 데이터 insert기준
+    * 하이버네이트6에서는 자동으로 중복 제거를 보정한다.(중복제거 최적화) 루트의 엔티티를 중복을 걸러줌
+    * v2와 차이는 그저 repository의 차이일뿐, 소스는 같다(성능 튜닝은 됐지만 소스를 많이 수정할 필요가 없음)
+    * */
     @GetMapping("/api/v3/orders")
     public  List<OrderDto>  orderV3() {
-        return null;
+        List<Order> allWithItem = orderRepository.findAllWithItem();
+        List<OrderDto> collect = allWithItem.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Data
