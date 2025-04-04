@@ -2,12 +2,11 @@ package jpabook.jpashop.service;
 
 import jakarta.persistence.EntityManager;
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.respository.MemberRepository;
+import jpabook.jpashop.respository.MemberRepositoryOld;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MemberServiceTest {
 
     @Autowired MemberService memberService;
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepositoryOld memberRepository;
     @Autowired
     EntityManager em;
 

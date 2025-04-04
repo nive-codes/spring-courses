@@ -6,7 +6,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.respository.ItemRepository;
-import jpabook.jpashop.respository.MemberRepository;
+import jpabook.jpashop.respository.MemberRepositoryOld;
 import jpabook.jpashop.respository.OrderRepository;
 import jpabook.jpashop.respository.OrderSearch;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import java.util.List;
 public class OrderService {
 
   private final OrderRepository orderRepository;
-  private final MemberRepository memberRepository;
+  private final MemberRepositoryOld memberRepository;
   private final ItemRepository itemRepository;
 
 

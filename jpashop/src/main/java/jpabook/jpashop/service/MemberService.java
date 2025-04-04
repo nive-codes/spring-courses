@@ -1,10 +1,8 @@
 package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.respository.MemberRepository;
-import lombok.AllArgsConstructor;
+import jpabook.jpashop.respository.MemberRepositoryOld;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
 
-    private final MemberRepository memberRepository;
+    private final MemberRepositoryOld memberRepository;
 
 //    private MemberRepository memberRepository;
 //    private final MemberRepository memberRepository;    //생성자일땐 final을 권장 값을 꼭 있어야되고 세팅이 꼭 되어 있어야되는 것. 컴파일 시점에서 에러 확인 가능
