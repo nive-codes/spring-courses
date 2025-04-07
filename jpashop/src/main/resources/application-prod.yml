@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://{host}:{port}/{dbname}
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: {username}
+    password: {password}
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDBDialect
+    hibernate:
+      ddl-auto: none
+file:
+  storage: s3
+  s3:
+    bucket:
+    region:
+    access-key:
+    secret-key:
